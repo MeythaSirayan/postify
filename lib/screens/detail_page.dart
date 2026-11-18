@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../resources/models/model.dart';
+import '../widgets/text.dart';
 import 'edit_page.dart';
 
 class DetailPage extends StatelessWidget {
@@ -26,14 +27,11 @@ class DetailPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: darkPurple),
         ),
         centerTitle: true,
-        title: const Text(
-          'ARTICLE',
-          style: TextStyle(
-            color: darkPurple,
-            fontSize: 11,
-            letterSpacing: 2,
-            fontWeight: FontWeight.bold,
-          ),
+        title: const AppText(
+          text: 'ARTICLE',
+          size: 11,
+          weight: FontWeight.bold,
+          color: darkPurple,
         ),
         actions: [
           IconButton(
@@ -64,36 +62,31 @@ class DetailPage extends StatelessWidget {
                 color: const Color(0xFFEDE4F3),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text(
-                'POST #${post.id}',
-                style: const TextStyle(
-                  color: darkPurple,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1,
-                ),
+              child: AppText(
+                text: 'POST #${post.id}',
+                size: 11,
+                weight: FontWeight.bold,
+                color: darkPurple,
               ),
             ),
 
             const SizedBox(height: 24),
 
             // TITLE
-            Text(
-              post.title,
-              style: const TextStyle(
-                fontFamily: 'Georgia',
-                fontSize: 30,
-                height: 1.3,
-                color: darkPurple,
-              ),
+            AppText(
+              text: post.title,
+              size: 30,
+              weight: FontWeight.bold,
+              color: Colors.black,
             ),
 
             const SizedBox(height: 14),
 
             // AUTHOR
-            const Text(
-              'Oleh Postify Studio  ·  koleksi editorial',
-              style: TextStyle(color: Colors.black54, fontSize: 12),
+            const AppText(
+              text: 'Oleh Postify Studio  ·  koleksi editorial',
+              size: 12,
+              color: Colors.black54,
             ),
 
             const SizedBox(height: 28),
@@ -103,14 +96,7 @@ class DetailPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // BODY
-            Text(
-              post.body,
-              style: const TextStyle(
-                color: Color(0xFF51485A),
-                fontSize: 16,
-                height: 1.8,
-              ),
-            ),
+            AppText(text: post.body, size: 16),
 
             const SizedBox(height: 35),
 
@@ -118,14 +104,11 @@ class DetailPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            const Text(
-              'KELOLA POST INI',
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1,
-              ),
+            const AppText(
+              text: 'KELOLA POST INI',
+              size: 11,
+              weight: FontWeight.bold,
+              color: Colors.black54,
             ),
 
             const SizedBox(height: 16),
@@ -143,7 +126,11 @@ class DetailPage extends StatelessWidget {
                 }
               },
               icon: const Icon(Icons.edit_outlined),
-              label: const Text('Edit Post'),
+              label: const AppText(
+                text: 'Edit Post',
+                size: 14,
+                weight: FontWeight.w600,
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: darkPurple,
                 side: const BorderSide(color: purple),

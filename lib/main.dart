@@ -15,7 +15,7 @@ class PostifyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'POSTIFY',
-      theme: ThemeData(
+      theme: ThemeData(  
         useMaterial3: true,
         fontFamily: GoogleFonts.playfairDisplay().fontFamily,
         colorSchemeSeed: const Color(0xFF9B321A),

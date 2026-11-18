@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/text.dart';
 import '../resources/models/model.dart';
 import '../resources/services/api_service.dart';
 import 'detail_page.dart';
@@ -115,7 +116,6 @@ class _PostifyListPageState extends State<PostifyListPage> {
   }
 
   // DETAIL POST
-
   Future<void> showDetail(PostModel post) async {
     final result = await Navigator.push<PostModel>(
       context,
@@ -138,17 +138,31 @@ class _PostifyListPageState extends State<PostifyListPage> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Hapus artikel?'),
-        content: const Text('Artikel ini akan dihapus dari daftar.'),
+        title: const AppHeading(
+          text: 'Hapus artikel?',
+          size: 20,
+          weight: FontWeight.bold,
+          color: darkPurple,
+        ),
+        content: const AppText(
+          text: 'Artikel ini akan dihapus dari daftar.',
+          size: 14,
+          color: Colors.black,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Batal'),
+            child: const AppText(text: 'Batal', size: 14, color: darkPurple),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: darkPurple),
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Hapus'),
+            child: const AppText(
+              text: 'Hapus',
+              size: 14,
+              weight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -165,14 +179,27 @@ class _PostifyListPageState extends State<PostifyListPage> {
         articles.removeWhere((item) => item.id == post.id);
       });
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Artikel berhasil dihapus')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: AppText(
+            text: 'Artikel berhasil dihapus',
+            size: 14,
+            color: Colors.white,
+          ),
+        ),
+      );
     } catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Gagal menghapus: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AppText(
+            text: 'Gagal menghapus: $e',
+            size: 14,
+            color: Colors.white,
+          ),
+        ),
+      );
     }
   }
 
@@ -183,18 +210,17 @@ class _PostifyListPageState extends State<PostifyListPage> {
     return Scaffold(
       backgroundColor: background,
 
+      // APP BAR
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: Text(
-          'Postify.',
-          style: GoogleFonts.playfairDisplay(
-            color: darkPurple,
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-          ),
+        title: const AppHeading(
+          text: 'postify.',
+          size: 26,
+          weight: FontWeight.bold,
+          color: darkPurple,
         ),
         actions: [
           IconButton(
@@ -228,32 +254,28 @@ class _PostifyListPageState extends State<PostifyListPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'YOUR CREATIVE SPACE',
-                  style: TextStyle(
-                    color: gold,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
-                  ),
+                const AppText(
+                  text: 'YOUR CREATIVE SPACE',
+                  size: 11,
+                  weight: FontWeight.bold,
+                  color: Colors.white,
                 ),
 
                 const SizedBox(height: 16),
-                Text(
-                  'Ideas deserve\nto be written.',
-                  style: GoogleFonts.playfairDisplay(
-                    color: Colors.white,
-                    fontSize: 29,
-                    fontWeight: FontWeight.w500,
-                    height: 1.2,
-                  ),
+
+                const AppHeading(
+                  text: 'Ideas deserve\nto be written.',
+                  size: 29,
+                  weight: FontWeight.w500,
+                  color: Colors.white,
                 ),
 
                 const SizedBox(height: 12),
 
-                Text(
-                  '${articles.length} artikel dalam koleksi',
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                AppText(
+                  text: '${articles.length} artikel dalam koleksi',
+                  size: 13,
+                  color: Colors.white70,
                 ),
               ],
             ),
@@ -265,8 +287,13 @@ class _PostifyListPageState extends State<PostifyListPage> {
             child: TextField(
               controller: searchController,
               onChanged: (_) => setState(() {}),
+              style: GoogleFonts.lato(fontSize: 14, color: darkPurple),
               decoration: InputDecoration(
                 hintText: 'Cari artikel...',
+                hintStyle: GoogleFonts.lato(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
                 prefixIcon: const Icon(Icons.search, color: darkPurple),
                 suffixIcon: IconButton(
                   onPressed: () {
@@ -297,7 +324,12 @@ class _PostifyListPageState extends State<PostifyListPage> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: ChoiceChip(
-                    label: Text(filter),
+                    label: AppText(
+                      text: filter,
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: active ? darkPurple : Colors.black54,
+                    ),
                     selected: active,
                     onSelected: (_) {
                       setState(() {
@@ -306,10 +338,6 @@ class _PostifyListPageState extends State<PostifyListPage> {
                     },
                     selectedColor: purple.withOpacity(0.18),
                     backgroundColor: Colors.white,
-                    labelStyle: TextStyle(
-                      color: active ? darkPurple : Colors.black54,
-                      fontWeight: FontWeight.w600,
-                    ),
                     side: BorderSide(color: active ? purple : Colors.black12),
                   ),
                 );
@@ -325,9 +353,10 @@ class _PostifyListPageState extends State<PostifyListPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  '${data.length} hasil',
-                  style: const TextStyle(color: Colors.black54, fontSize: 12),
+                AppText(
+                  text: '${data.length} hasil',
+                  size: 12,
+                  color: Colors.black54,
                 ),
               ],
             ),
@@ -353,11 +382,19 @@ class _PostifyListPageState extends State<PostifyListPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Gagal memuat artikel'),
+            const AppText(
+              text: 'Gagal memuat artikel',
+              size: 16,
+              color: darkPurple,
+            ),
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: loadArticles,
-              child: const Text('Coba lagi'),
+              child: const AppText(
+                text: 'Coba lagi',
+                size: 14,
+                color: darkPurple,
+              ),
             ),
           ],
         ),
@@ -365,11 +402,18 @@ class _PostifyListPageState extends State<PostifyListPage> {
     }
 
     if (data.isEmpty) {
-      return const Center(child: Text('Artikel tidak ditemukan'));
+      return const Center(
+        child: AppText(
+          text: 'Artikel tidak ditemukan',
+          size: 15,
+          color: darkPurple,
+        ),
+      );
     }
 
     return RefreshIndicator(
       onRefresh: loadArticles,
+      color: darkPurple,
       child: ListView.builder(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 100),
         itemCount: data.length,
@@ -387,67 +431,61 @@ class _PostifyListPageState extends State<PostifyListPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // POST NUMBER
                 Row(
                   children: [
                     CircleAvatar(
                       radius: 17,
                       backgroundColor: purple.withOpacity(0.15),
-                      child: Text(
-                        '${index + 1}',
-                        style: const TextStyle(
-                          color: darkPurple,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: AppText(
+                        text: '${index + 1}',
+                        weight: FontWeight.bold,
+                        color: darkPurple,
                       ),
                     ),
 
                     const SizedBox(width: 12),
 
-                    Text(
-                      'POST #${post.id}',
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 11,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    AppText(
+                      text: 'POST #${post.id}',
+                      size: 11,
+                      weight: FontWeight.w600,
+                      color: Colors.black54,
                     ),
                   ],
                 ),
 
                 const SizedBox(height: 18),
 
-                Text(
-                  post.title,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: darkPurple,
-                  ),
+                // TITLE
+                AppHeading(
+                  text: post.title,
+                  size: 17,
+                  weight: FontWeight.bold,
+                  color: Colors.black,
                 ),
 
                 const SizedBox(height: 9),
 
-                Text(
-                  post.body,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    height: 1.5,
-                    fontSize: 13,
-                  ),
-                ),
+                // BODY
+                AppText(text: post.body, size: 13, color: Colors.black54),
 
                 const SizedBox(height: 18),
+
                 const Divider(),
 
+                // ACTIONS
                 Row(
                   children: [
                     TextButton.icon(
                       onPressed: () => showDetail(post),
                       icon: const Icon(Icons.arrow_forward, size: 16),
-                      label: const Text('Baca selengkapnya'),
+                      label: const AppText(
+                        text: 'Baca selengkapnya',
+                        size: 14,
+                        weight: FontWeight.bold,
+                        color: darkPurple,
+                      ),
                       style: TextButton.styleFrom(foregroundColor: darkPurple),
                     ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../resources/models/model.dart';
+import 'text.dart';
 
 class PostifyArticleCard extends StatelessWidget {
   final PostModel post;
@@ -31,24 +32,18 @@ class PostifyArticleCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.indigo.shade50,
-                  child: Text(
-                    '${post.id}',
-                    style: const TextStyle(
-                      color: Colors.indigo,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: AppText(
+                    text: '${post.id}',
+                    weight: FontWeight.bold,
+                    color: Colors.indigo,
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(
-                    post.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: AppHeading(
+                    text: post.title,
+                    size: 16,
+                    weight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -56,11 +51,10 @@ class PostifyArticleCard extends StatelessWidget {
 
             const SizedBox(height: 14),
 
-            Text(
-              post.body,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.grey.shade700, height: 1.5),
+            AppText(
+              text: post.body,
+              size: 14,
+              color: Colors.grey.shade700,
             ),
 
             const Divider(height: 28),

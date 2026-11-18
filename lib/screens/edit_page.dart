@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../resources/models/model.dart';
+import '../widgets/text.dart';
 import '../resources/services/api_service.dart';
 
 class EditPage extends StatefulWidget {
@@ -48,7 +50,13 @@ class _EditPageState extends State<EditPage> {
     if (titleController.text.trim().isEmpty ||
         bodyController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Judul dan isi post harus diisi')),
+        const SnackBar(
+          content: AppText(
+            text: 'Judul dan isi post harus diisi',
+            size: 14,
+            color: Colors.white,
+          ),
+        ),
       );
       return;
     }
@@ -75,7 +83,11 @@ class _EditPageState extends State<EditPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Gagal menyimpan post: $e'),
+          content: AppText(
+            text: 'Gagal menyimpan post: $e',
+            size: 14,
+            color: Colors.white,
+          ),
           backgroundColor: darkPurple,
         ),
       );
@@ -106,27 +118,22 @@ class _EditPageState extends State<EditPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              isEditing ? 'EDITING STORY' : 'NEW STORY',
-              style: const TextStyle(
-                color: darkPurple,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.5,
-              ),
+            AppText(
+              text: isEditing ? 'EDITING STORY' : 'NEW STORY',
+              size: 11,
+              weight: FontWeight.bold,
+              color: darkPurple,
             ),
 
             const SizedBox(height: 8),
 
-            Text(
-              isEditing
+            AppHeading(
+              text: isEditing
                   ? 'Poles kembali ide ini.'
                   : 'Apa yang ingin kamu tulis?',
-              style: const TextStyle(
-                fontFamily: 'Georgia',
-                fontSize: 27,
-                color: darkPurple,
-              ),
+              size: 27,
+              weight: FontWeight.w500,
+              color: Colors.black,
             ),
 
             const SizedBox(height: 32),
@@ -135,23 +142,19 @@ class _EditPageState extends State<EditPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'JUDUL',
-                  style: TextStyle(
-                    color: darkPurple,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const AppText(
+                  text: 'JUDUL',
+                  size: 11,
+                  weight: FontWeight.bold,
+                  color: Colors.black,
                 ),
                 ValueListenableBuilder(
                   valueListenable: titleController,
                   builder: (context, value, child) {
-                    return Text(
-                      '${value.text.length}/120',
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 11,
-                      ),
+                    return AppText(
+                      text: '${value.text.length}/120',
+                      size: 11,
+                      color: Colors.black54,
                     );
                   },
                 ),
@@ -165,7 +168,7 @@ class _EditPageState extends State<EditPage> {
               maxLength: 120,
               maxLines: 2,
               decoration: inputDecoration('Tulis judul post...'),
-              style: const TextStyle(color: darkPurple),
+              style: GoogleFonts.lato(color: Colors.black),
             ),
 
             const SizedBox(height: 24),
@@ -174,23 +177,19 @@ class _EditPageState extends State<EditPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'ISI CERITA',
-                  style: TextStyle(
-                    color: darkPurple,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const AppText(
+                  text: 'ISI CERITA',
+                  size: 11,
+                  weight: FontWeight.bold,
+                  color: Colors.black,
                 ),
                 ValueListenableBuilder(
                   valueListenable: bodyController,
                   builder: (context, value, child) {
-                    return Text(
-                      '${value.text.length}/2000',
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 11,
-                      ),
+                    return AppText(
+                      text: '${value.text.length}/2000',
+                      size: 11,
+                      color: Colors.black54,
                     );
                   },
                 ),
@@ -204,7 +203,7 @@ class _EditPageState extends State<EditPage> {
               maxLength: 2000,
               maxLines: 8,
               decoration: inputDecoration('Ceritakan idemu di sini...'),
-              style: const TextStyle(color: darkPurple, height: 1.5),
+              style: GoogleFonts.lato(color: Colors.black, height: 1.5),
             ),
 
             const SizedBox(height: 25),
@@ -229,11 +228,13 @@ class _EditPageState extends State<EditPage> {
                         children: [
                           const Icon(Icons.arrow_upward),
                           const SizedBox(width: 10),
-                          Text(
-                            isEditing
+                          AppText(
+                            text: isEditing
                                 ? 'Simpan perubahan'
                                 : 'Publikasikan post',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            size: 14,
+                            weight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ],
                       ),
@@ -243,14 +244,10 @@ class _EditPageState extends State<EditPage> {
             const SizedBox(height: 20),
 
             const Center(
-              child: Text(
-                'Post dikirim ke JSONPlaceholder\nuntuk simulasi pengelolaan artikel.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 11,
-                  height: 1.5,
-                ),
+              child: AppText(
+                text: 'Post dikirim ke JSONPlaceholder\nuntuk simulasi pengelolaan artikel.',
+                size: 11,
+                color: Colors.black45,
               ),
             ),
           ],
@@ -263,6 +260,7 @@ class _EditPageState extends State<EditPage> {
   InputDecoration inputDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
+      hintStyle: GoogleFonts.lato(color: Colors.black54),
       counterText: '',
       filled: true,
       fillColor: const Color(0xFFF1EBF4),
